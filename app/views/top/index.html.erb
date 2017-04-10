@@ -1,0 +1,14 @@
+<div class="post">
+  <a href="tweets/new" button type="button" class="btn btn-default">投稿するにゃん</a></button>
+</div>
+<div class="tweet-box">
+      <% @tweets.each do |tweet|%>
+  <div class="tweet-image">
+  <%= image_tag tweet.image_url(:thumb).to_s %>
+  </div>
+  <div class="tweet-text">
+  投稿者<span><%=simple_format(tweet.text)%></span>
+  </div>
+  <% end %>
+<%= paginate(@tweets) %>
+</div>
