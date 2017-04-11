@@ -1,0 +1,6 @@
+<div class="tweet-box">
+<div class="img-thumbnail tweet-image">
+  <%= image_tag @tweet.image_url(:thumb).to_s %>
+  <span><%=simple_format(@tweet.text)%></span>
+</div>
+</div>

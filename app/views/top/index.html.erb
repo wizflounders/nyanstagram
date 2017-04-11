@@ -1,13 +1,28 @@
 <div class="post">
   <a href="tweets/new" button type="button" class="btn btn-default">投稿するにゃん</a></button>
-</div>
-<div class="tweet-box">
+</div></br>
+  <% @randoms.each do |random| %>
+
+  <span class="img-thumbnail">
+    <%= link_to tweet_path(random.id) do %>
+    <%= image_tag  random.image_url(:small).to_s %>
+    </br>
+    投稿者
+    <% end %>
+  </span>
+
+  <% end %></br>
+  </br><div class="tweet-box">
       <% @tweets.each do |tweet|%>
-  <div class="tweet-image">
+  <div class="img-thumbnail tweet-image">
+    <%= link_to tweet_path(tweet.id) do %>
+    <span><%=simple_format(tweet.text)%></span>
   <%= image_tag tweet.image_url(:thumb).to_s %>
+  <% end %>
+
   </div>
   <div class="tweet-text">
-  投稿者<span><%=simple_format(tweet.text)%></span>
+
   </div>
   <% end %>
 <%= paginate(@tweets) %>

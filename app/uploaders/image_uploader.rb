@@ -54,7 +54,10 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   # バージョンを作成して、別のリサイズを指定することもできます
   version :thumb do
-    process :resize_to_fill => [480, 480]
+    process :resize_to_fill => [560, 560]
+  end
+  version :small do
+    process :resize_to_fill => [150, 150]
   end
     # jpg,jpeg,gif,pngしか受け付けない
     def extension_white_list
