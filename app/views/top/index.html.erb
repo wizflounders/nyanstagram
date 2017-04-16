@@ -4,26 +4,38 @@
   <% @randoms.each do |random| %>
 
   <span class="img-thumbnail">
-    <%= link_to tweet_path(random.id) do %>
+    <%= link_to user_path(random.user.id) do %>
     <%= image_tag  random.image_url(:small).to_s %>
     </br>
-    投稿者
+    <%= random.user.cat_name %>
     <% end %>
   </span>
 
   <% end %></br>
   </br><div class="tweet-box">
       <% @tweets.each do |tweet|%>
-  <div class="img-thumbnail tweet-image">
-    <%= link_to tweet_path(tweet.id) do %>
-    <span><%=simple_format(tweet.text)%></span>
-  <%= image_tag tweet.image_url(:thumb).to_s %>
-  <% end %>
+      <div class="tweet-box img-thumbnail tweet-image">
+        <span><%= link_to tweet.user.cat_name, user_path(tweet.user_id) %></span></br>
+        <%= link_to tweet_path(tweet.id) do %>
+        </br><%= image_tag tweet.image_url(:thumb).to_s %>
+        <% end %>
+        <div></br>
+        <%= form_tag("/tweets/#{tweet.id}/comments", method: :post) do %>
+        <textarea cols="67" name="text" placeholder="コメントを追加..." rows="2"></textarea>
+        <input type="submit" value="SENT">
+        <% end %>
+        <% if tweet.comments.present? %>
+        <% tweet.comments.each do |comment|%>
+        <%= tweet.user.cat_name %>
+        <%= comment.text %></br>
+        <% end %>
+        <% end %>
 
+      </div>
+     </div>
+     <% end %>
   </div>
-  <div class="tweet-text">
 
-  </div>
-  <% end %>
+
 <%= paginate(@tweets) %>
 </div>

@@ -12,11 +12,11 @@ class TweetsController < ApplicationController
   end
 
   def show
-    @tweet =Tweet.find(params[:id]) 
+    @tweet =Tweet.find(params[:id])
   end
 
   private
    def create_params
-     params.require(:tweet).permit(:image, :text)
+     params.require(:tweet).permit(:image, :text).merge(user_id: current_user.id)
    end
 end
