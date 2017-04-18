@@ -7,6 +7,7 @@
     <%= link_to user_path(random.user.id) do %>
     <%= image_tag  random.image_url(:small).to_s %>
     </br>
+    <%= image_tag random.user.image_url(:minimum).to_s, {:class =>"img-circle"} %>
     <%= random.user.cat_name %>
     <% end %>
   </span>
@@ -15,6 +16,9 @@
   </br><div class="tweet-box">
       <% @tweets.each do |tweet|%>
       <div class="tweet-box img-thumbnail tweet-image">
+        <%= link_to user_path(tweet.user.id) do %>
+        <%= image_tag tweet.user.image_url(:minimum).to_s, {:class =>"img-circle"} %>
+        <% end %>
         <span><%= link_to tweet.user.cat_name, user_path(tweet.user_id) %></span></br>
         <%= link_to tweet_path(tweet.id) do %>
         </br><%= image_tag tweet.image_url(:thumb).to_s %>
@@ -24,15 +28,27 @@
         <textarea cols="67" name="text" placeholder="コメントを追加..." rows="2"></textarea>
         <input type="submit" value="SENT">
         <% end %>
-        <% if tweet.comments.present? %>
-        <% tweet.comments.each do |comment|%>
-        <%= tweet.user.cat_name %>
-        <%= comment.text %></br>
-        <% end %>
-        <% end %>
-
+        </div>
+          <% if tweet.text.present? %>
+          <%= link_to user_path(tweet.user.id) do %>
+          <%= image_tag tweet.user.image_url(:minimum).to_s, {:class =>"img-circle"} %>
+          <% end %>
+          <%= link_to tweet.user.cat_name, user_path(tweet.user.id) %>
+          <%= tweet.text %>
+          <% end %>
+        <div>
+          <% if tweet.comments.present? %>
+          <% tweet.comments.order(created_at: :desc).first(3).each do |comment|%>
+          <%= link_to user_path(comment.user.id) do %>
+          <%= image_tag comment.user.image_url(:minimum).to_s, {:class =>"img-circle"} %>
+          <% end %>
+          <%= link_to comment.user.cat_name, user_path(comment.user.id) %>
+          <%= comment.text %></br>
+          <% end %>
+          <% end %>
+        </br><%= link_to "全てのコメントを見る", tweet_path(tweet.id)%>
+        </diV>
       </div>
-     </div>
      <% end %>
   </div>
 

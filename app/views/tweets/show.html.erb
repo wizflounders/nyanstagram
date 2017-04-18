@@ -1,6 +1,32 @@
-<div class="tweet-box">
-<div class="img-thumbnail tweet-image">
-  <%= image_tag @tweet.image_url(:thumb).to_s %>
-  <span><%=simple_format(@tweet.text)%></span>
-</div>
+<div class="tweet-box img-thumbnail tweet-image">
+    <%= link_to user_path(@tweet.user.id) do %>
+    <%= image_tag @tweet.user.image_url(:minimum).to_s, {:class =>"img-circle"} %>
+    <% end %>
+    <span><%= link_to @tweet.user.cat_name, user_path(@tweet.user_id) %></span></br>
+
+  <%= link_to tweet_path(@tweet.id) do %>
+</br><%= image_tag @tweet.image_url(:thumb).to_s %>
+  <% end %>
+  <div></br>
+  <%= form_tag("/tweets/#{@tweet.id}/comments", method: :post) do %>
+  <textarea cols="67" name="text" placeholder="コメントを追加..." rows="2"></textarea>
+  <input type="submit" value="SENT">
+  <% end %>
+  </div>
+    <% if @tweet.text.present? %>
+    <%= @tweet.user.cat_name %>
+    <%= @tweet.text %>
+    <% end %>
+  <div></br>
+
+    <% if @comments.present? %>
+    <% @comments.each do |comment|%>
+    <%= link_to user_path(comment.user.id) do %>
+    <%= image_tag comment.user.image_url(:minimum).to_s, {:class =>"img-circle"} %>
+    <% end %>
+    <%= link_to comment.user.cat_name, user_path(comment.user) %>
+    <%= comment.text %></br>
+    <% end %>
+    <% end %>
+  </div>
 </div>

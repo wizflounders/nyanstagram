@@ -59,6 +59,13 @@ class ImageUploader < CarrierWave::Uploader::Base
   version :small do
     process :resize_to_fill => [150, 150]
   end
+  version :mypage do
+    process :resize_to_fill => [152, 152]
+  end
+
+  version :index do
+    process :resize_to_fill => [293, 293]
+  end
 
   version :minimum do
     process :resize_to_fill => [30, 30]
